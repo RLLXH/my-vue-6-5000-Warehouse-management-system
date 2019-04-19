@@ -42,7 +42,7 @@
 </template>
 <script>
 import axios from '../api/axios.js'
-import {test} from '../api/address.js'
+import {test,test2} from '../api/address.js'
 export default {
   data() {
     return {
@@ -56,9 +56,10 @@ export default {
   methods: {
     //新增
     AddnewBtn(){
-        axios.post(test+'?password=123456&username=123456',).then(data=>{
+        axios.post(test+'?password=123456&username=123456',{}).then(data=>{
       console.log(data)
     })
+       
       // this.$router.push({
       //   path:'/Index/orderManagementAddNew',
       //   query:{}
@@ -67,10 +68,12 @@ export default {
     //详情
     detailBtn(){
       console.log('121')
-      this.$router.push({
-        path:'/Index/orderManagementDetail',
-        query:{}
-      })
+      // this.$router.push({
+      //   path:'/Index/orderManagementDetail',
+      //   query:{}
+      // })
+        axios.post(test+'?bigCategoryName=1').then(data=>{
+      console.log(data)})
     },
     Btn() {
       this.$router.push({
