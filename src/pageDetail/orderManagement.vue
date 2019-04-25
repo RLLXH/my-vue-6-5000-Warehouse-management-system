@@ -60,18 +60,18 @@ export default {
       console.log(data)
     })
        
-      // this.$router.push({
-      //   path:'/Index/orderManagementAddNew',
-      //   query:{}
-      // })
+      this.$router.push({
+        path:'/Index/orderManagementAddNew',
+        query:{}
+      })
     },
     //详情
     detailBtn(){
       console.log('121')
-      // this.$router.push({
-      //   path:'/Index/orderManagementDetail',
-      //   query:{}
-      // })
+      this.$router.push({
+        path:'/Index/orderManagementDetail',
+        query:{}
+      })
         axios.post(test+'?bigCategoryName=1').then(data=>{
       console.log(data)})
     },

@@ -8,6 +8,7 @@
           </template>
            <el-menu-item index="/Index/warehouseDataManagement">库房资料管理</el-menu-item>
            <el-menu-item index="/Index/commodityDataManagement">商品资料管理</el-menu-item>
+           <el-menu-item index="/Index/UserManagement">用户管理</el-menu-item>
         </el-submenu>
         <el-submenu index="2">
           <template slot="title">
