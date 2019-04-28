@@ -63,6 +63,10 @@
   </div>
 </template>
 <script>
+import axios from "../api/axios.js";
+import {
+ storageRoomInsert
+} from "../api/address.js";
 export default {
   data() {
     return {
