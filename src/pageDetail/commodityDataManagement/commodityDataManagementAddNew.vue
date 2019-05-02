@@ -133,7 +133,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           if (this.$route.query.row) {
-            axios.put(goodsUpdate, this.postData).then(data => {
+            axios.put(goodsUpdate+'?id='+this.postData.id, this.postData).then(data => {
               this.$message.success("修改成功");
               this.$router.go(-1);
             });

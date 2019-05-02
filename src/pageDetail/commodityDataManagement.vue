@@ -21,8 +21,8 @@
       <el-table-column label="操作" width="180">
         <template slot-scope="scope">
           <div>
-           
             <el-button type="text" @click="updateBtn(scope.row)">修改</el-button>
+            <el-button type="text" @click="deleteBtn(scope.row)">删除</el-button>
           </div>
         </template>
       </el-table-column>
@@ -39,7 +39,7 @@
 
 <script>
 import axios from "../api/axios.js";
-import { goodsSelect } from "../api/address.js";
+import { goodsSelect ,goodsDelete} from "../api/address.js";
 export default {
   data() {
     return {
@@ -67,6 +67,12 @@ export default {
     this.getList();
   },
   methods: {
+    deleteBtn(row){
+      axios.delete(goodsDelete+'?id='+row.id).then(data=>{
+        this.$message.success('删除成功')
+        this.getList();
+      })
+    },
     getList() {
       axios.post(goodsSelect, this.theQuery).then(data => {
         console.log(data);
