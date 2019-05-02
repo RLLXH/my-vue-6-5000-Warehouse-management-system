@@ -8,3 +8,8 @@ export const userUpdate='/user/update'//修改
 export const userDelete='/user/delete'//删除
 //库房管理
 export const storageRoomInsert='/storageRoom/insert' //添加
+//商品资料管理
+export const goodsInsert='/goods/insert'//添加
+export const goodsDelete='/goods/delete'//删除
+export const goodsUpdate='/goods/update'//更新
+export const goodsSelect='/goods/select'//查找(动态，分页)

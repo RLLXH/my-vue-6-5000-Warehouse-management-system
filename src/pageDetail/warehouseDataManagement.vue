@@ -35,26 +35,33 @@
       <el-table-column label="所在地区" prop="name"></el-table-column>
     </el-table>
     <el-dialog title="新增库房" :visible.sync="dialogVisibleAdd" width="20%" center>
-      <el-form label-position="right" label-width="100px" :inline="true">
+      <el-form
+        label-position="right"
+        label-width="100px"
+        :inline="true"
+        :model="postData"
+        ref="postData"
+        :rules="rules"
+      >
         <el-form-item label="库房名称:">
-          <el-input></el-input>
+          <el-input v-model="postData.storageRoomName"></el-input>
         </el-form-item>
         <el-form-item label="库房地址:">
-          <el-input></el-input>
+          <el-input v-model='postData.address'></el-input>
         </el-form-item>
         <el-form-item label="详细地址:">
           <el-input></el-input>
         </el-form-item>
         <el-form-item label="联系人:">
-          <el-input></el-input>
+          <el-input v-model="postData.contactsPerson"></el-input>
         </el-form-item>
         <el-form-item label="电话:">
-          <el-input></el-input>
+          <el-input v-model="postData.phone"></el-input>
         </el-form-item>
       </el-form>
       <el-row class="dialoBtnBox">
-        <el-button >提交</el-button>
-        <el-button >取消</el-button>
+        <el-button>提交</el-button>
+        <el-button>取消</el-button>
       </el-row>
     </el-dialog>
     <el-dialog title="库房详情" :visible.sync="dialogVisibleDetail" width="30%">
@@ -64,14 +71,21 @@
 </template>
 <script>
 import axios from "../api/axios.js";
-import {
- storageRoomInsert
-} from "../api/address.js";
+import { storageRoomInsert } from "../api/address.js";
 export default {
   data() {
     return {
       dialogVisibleDetail: false,
       dialogVisibleAdd: false,
+      postData: {
+        address: "string", //地址
+        contactsPerson: "string", //联系人
+        createPerson: "string", //创建人
+        phone: "string", //电话
+        prohibit: true, //是否禁用
+        storageRoomCode: "string", //库房编码
+        storageRoomName: "string" //库房名称
+      },
       dataList: [
         {
           name: "奶粉"
@@ -83,6 +97,7 @@ export default {
     //新增
     AddnewBtn() {
       this.dialogVisibleAdd = true;
+      axios.post(storageRoomInsert);
     },
     //详情
     detailBtn() {
@@ -101,7 +116,7 @@ export default {
 .addBtn {
   margin: 10px 0px;
 }
-.dialoBtnBox{
-    text-align: center
+.dialoBtnBox {
+  text-align: center;
 }
 </style>

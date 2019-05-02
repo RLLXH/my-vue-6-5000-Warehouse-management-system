@@ -32,7 +32,7 @@
       <el-table-column label="用户编号" prop="uid"></el-table-column>
       <el-table-column label="用户名称" prop="name"></el-table-column>
       <el-table-column label="用户登录名" prop="username"></el-table-column>
-      <el-table-column label="权限" prop="name"></el-table-column>
+      <el-table-column label="权限" prop="roleListId"></el-table-column>
     </el-table>
     <el-dialog title="新增用户" :visible.sync="dialogVisibleAdd" width="20%" center>
       <el-form
@@ -52,12 +52,12 @@
         <el-form-item label="用户密码:" prop="password">
           <el-input v-model="addData.password" type="password"></el-input>
         </el-form-item>
-        <!-- <el-form-item label="用户权限:">
-          <el-select>
-              <el-option value="管理员" label="管理员"></el-option>
-                <el-option value="游客" label="游客"></el-option>
+        <el-form-item label="用户权限:">
+          <el-select v-model="addData.roleListId">
+            <el-option value="0" label="管理员"></el-option>
+            <el-option value="1" label="游客"></el-option>
           </el-select>
-        </el-form-item>-->
+        </el-form-item>
       </el-form>
       <el-row class="dialoBtnBox">
         <el-button @click="addBtn('addData')">提交</el-button>
@@ -113,7 +113,8 @@ export default {
       addData: {
         name: "", //名字
         password: "", //密码
-        username: "" //登录名（唯一）
+        username: "", //登录名（唯一）
+        roleListId: "" //权限
       },
       updateData: {},
       dataList: [],
@@ -131,7 +132,9 @@ export default {
     updatepostBtn(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          axios.put(userUpdate, this.updateData).then(data => {
+          let id = this.updateData.id;
+          delete this.updateData.id;
+          axios.put(userUpdate + "?id=" + id, this.updateData).then(data => {
             this.$message.success("修改成功");
             this.dialogVisibleUpadte = false;
             this.getList();
@@ -158,12 +161,20 @@ export default {
     addBtn(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          axios.post(userInsert, this.addData).then(data => {
+          let data = {
+            name: this.addData.name, //名字
+            password: this.addData.password, //密码
+            username: this.addData.username, //登录名（唯一）
+            roleListId: [this.addData.roleListId-0]//权限
+          };
+
+          axios.post(userInsert, data).then(data => {
             console.log(data);
             this.dialogVisibleAdd = false;
             (this.addData.name = ""),
               (this.addData.password = ""),
               (this.addData.username = "");
+            this.addData.roleListId = "";
             this.getList();
           });
         }

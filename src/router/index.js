@@ -132,8 +132,7 @@ export default new Router({
         path:'UserManagement',
         name:'用户管理',
         component:UserManagement
-      }
-
+      },
       ]
     }
   ]
