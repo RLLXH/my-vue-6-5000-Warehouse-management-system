@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Message } from 'element-ui';
-axios.defaults.baseURL = 'http://192.168.0.105:8886'
+axios.defaults.baseURL = 'http://192.168.10.210:8886'
 
 axios.defaults.withCredentials = true;
 //添加请求拦截器
@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true;
 axios.interceptors.request.use(
     config => {
         config.params = Object.assign({})
-        console.log(config,'1212')
+        
         return config
     },
     error => {

@@ -34,6 +34,7 @@
       <el-table-column label="供应商" prop="goodsSupplier"></el-table-column>
       <el-table-column label="供应渠道" prop="goodsChannel"></el-table-column>
     </el-table>
+     <paging v-on:pageFlag="pageFlag" :pageNum="pageNum" :theQuery="theQuery"></paging>
   </div>
 </template>
 
@@ -48,6 +49,7 @@ export default {
           name: "奶粉"
         }
       ],
+      pageNum:'',
       theQuery: {
         category: null,
         goodsAttributel: null,
@@ -67,6 +69,12 @@ export default {
     this.getList();
   },
   methods: {
+          //分页
+    pageFlag: function(data) {
+      this.theQuery.pageNum = data.pageNo;
+      this.theQuery.pageSize = data.pageSize;
+      this.getList();
+    },
     deleteBtn(row){
       axios.delete(goodsDelete+'?id='+row.id).then(data=>{
         this.$message.success('删除成功')
@@ -77,6 +85,7 @@ export default {
       axios.post(goodsSelect, this.theQuery).then(data => {
         console.log(data);
         this.dataList = data.content;
+          this.pageNum=data.totalElements;
       });
     },
     //新增

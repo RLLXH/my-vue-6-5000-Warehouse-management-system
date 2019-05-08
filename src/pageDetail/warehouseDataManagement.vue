@@ -45,6 +45,7 @@
       <el-table-column label="电话" prop="phone"></el-table-column>
       <el-table-column label="地址" prop="address"></el-table-column>
     </el-table>
+     <paging v-on:pageFlag="pageFlag" :pageNum="pageNum" :theQuery="theQuery"></paging>
     <el-dialog title="新增库房" :visible.sync="dialogVisibleAdd" width="20%" center>
       <el-form
         label-position="right"
@@ -130,6 +131,7 @@ import {
 export default {
   data() {
     return {
+      pageNum:'',
       dialogVisibleDetail: false,
       dialogVisibleAdd: false,
       theQuery: {
@@ -175,6 +177,12 @@ export default {
     this.getList();
   },
   methods: {
+        //分页
+    pageFlag: function(data) {
+      this.theQuery.pageNum = data.pageNo;
+      this.theQuery.pageSize = data.pageSize;
+      this.getList();
+    },
     updateB(){
       this.dialogVisibleDetail = false;
     },
@@ -198,6 +206,7 @@ export default {
       axios.post(storageRoomSelect, this.theQuery).then(data => {
         console.log(data);
         this.dataList = data.content;
+        this.pageNum=data.totalElements;
       });
     },
     postB(){

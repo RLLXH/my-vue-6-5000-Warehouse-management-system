@@ -72,8 +72,8 @@ export default {
         goodsPrice: '',
         goodsName: "",
         goodsSupplier: "",
-        goodsType: "",
-        priceType: ""
+        goodsType: "string",
+        priceType: "string"
       },
       rules: {
         goodsCode: [{ required: true, message: "请输入", trigger: "blur" }],

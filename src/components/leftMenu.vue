@@ -23,7 +23,7 @@
           <template slot="title">
             <span>订单管理</span>
           </template>
-           <el-menu-item index="/Index/orderManagement">订单管理</el-menu-item>
+           <el-menu-item index="/Index/orderManagement">销售管理</el-menu-item>
             <el-menu-item index="/Index/returnsManagement">退货管理</el-menu-item>
         </el-submenu>
         <el-submenu index="4">
