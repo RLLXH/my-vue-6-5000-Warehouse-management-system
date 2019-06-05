@@ -1,5 +1,5 @@
 <template>
-  <div class="paging-layout" v-if="pageNum>20">
+  <div class="paging-layout" v-if="pageNum>0">
     <el-pagination
       class="page-input"
       @size-change="handleSizeChange"

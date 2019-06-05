@@ -12,7 +12,7 @@
           <el-input></el-input>
         </el-form-item>
         <el-form-item label=" ">
-          <el-button>查询</el-button>
+          <el-button @click="getList">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -32,8 +32,15 @@
       <el-table-column label="用户编号" prop="uid"></el-table-column>
       <el-table-column label="用户名称" prop="name"></el-table-column>
       <el-table-column label="用户登录名" prop="username"></el-table-column>
-      <el-table-column label="权限" prop="roleListId"></el-table-column>
+      <el-table-column label="权限" prop="roleListId">
+        <template slot-scope="scope">
+          <div>
+            <span>{{scope.row.roleDTOS.length>0?scope.row.roleDTOS[0].role:''}}</span>
+          </div>
+        </template>
+      </el-table-column>
     </el-table>
+    <paging v-on:pageFlag="pageFlag" :pageNum="pageNum" :theQuery="theQuery"></paging>
     <el-dialog title="新增用户" :visible.sync="dialogVisibleAdd" width="20%" center>
       <el-form
         label-position="right"
@@ -54,8 +61,8 @@
         </el-form-item>
         <el-form-item label="用户权限:">
           <el-select v-model="addData.roleListId">
-            <el-option value="0" label="管理员"></el-option>
-            <el-option value="1" label="游客"></el-option>
+            <el-option value="2" label="管理员"></el-option>
+            <el-option value="3" label="游客"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -79,15 +86,16 @@
         <el-form-item label="用户登录名:" prop="username">
           <el-input v-model="updateData.username"></el-input>
         </el-form-item>
-        <el-form-item label="新密码:" prop="password">
+       
+        <el-form-item label="用户权限:">
+          <el-select v-model="updateData.roleListId">
+              <el-option value="2" label="管理员"></el-option>
+            <el-option value="3" label="游客"></el-option>
+          </el-select>
+        </el-form-item>
+         <el-form-item label="新密码:" >
           <el-input v-model="updateData.password" type="password"></el-input>
         </el-form-item>
-        <!-- <el-form-item label="用户权限:">
-          <el-select>
-              <el-option value="管理员" label="管理员"></el-option>
-                <el-option value="游客" label="游客"></el-option>
-          </el-select>
-        </el-form-item>-->
       </el-form>
       <el-row class="dialoBtnBox">
         <el-button @click="updatepostBtn('updateData')">提交</el-button>
@@ -107,6 +115,11 @@ import {
 export default {
   data() {
     return {
+      theQuery:{
+        pageNum: 1,
+        pageSize: 20,
+      },
+      pageNum:'',
       dialogVisibleDetail: false,
       dialogVisibleAdd: false,
       dialogVisibleUpadte: false,
@@ -129,11 +142,19 @@ export default {
     this.getList();
   },
   methods: {
+      pageFlag: function(data) {
+      this.theQuery.pageNum = data.pageNo;
+      this.theQuery.pageSize = data.pageSize;
+      this.getList();
+    },
     updatepostBtn(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let id = this.updateData.id;
           delete this.updateData.id;
+          let value=this.updateData.roleListId
+          delete this.updateData.roleListId;
+          this.updateData.roleListId=[value-0]
           axios.put(userUpdate + "?id=" + id, this.updateData).then(data => {
             this.$message.success("修改成功");
             this.dialogVisibleUpadte = false;
@@ -149,13 +170,15 @@ export default {
         id: row.uid,
         name: row.name,
         username: row.username,
-        password: ""
-      };
+        password: "",
+        roleListId:row.roleDTOS[0].description
+      }; 
     },
     getList() {
-      axios.get(userSelect + "?pageNum=1&pageSize=20").then(data => {
+      axios.get(userSelect + "?pageNum="+this.theQuery.pageNum+"&pageSize="+this.theQuery.pageSize).then(data => {
         console.log(data);
         this.dataList = data.content;
+         this.pageNum=data.totalElements;
       });
     },
     addBtn(formName) {

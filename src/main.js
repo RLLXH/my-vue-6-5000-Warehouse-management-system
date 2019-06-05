@@ -9,14 +9,18 @@ import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import echarts from 'echarts'
 import paging from './components/paging.vue'
+import Vuex from 'vuex'
+import store from './store/index'
+Vue.use(Vuex)
+
 Vue.prototype.$echarts = echarts 
 Vue.component('paging',paging)
 Vue.use(ElementUI)
 Vue.config.productionTip = false
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

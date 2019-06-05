@@ -21,35 +21,95 @@
     </el-row> -->
     <el-table :data="dataList" style="width: 100%" border>
       <el-table-column label="序号" type="index" width="80"></el-table-column>
-      <el-table-column label="操作" width="80">
-        <template>
+      <el-table-column label="操作" width="100">
+        <template slot-scope="scope">
           <div>
-            <el-button type="text" @click="detailBtn">查看</el-button>
+            <el-button type="text" @click="detailBtn(scope.row.id)">查看</el-button>
+             <el-button type="text" v-if="!scope.row.storage" @click="outBtn(scope.row)">出库</el-button>
           </div>
         </template>
       </el-table-column>
-        <el-table-column label="出库单号" prop="name"></el-table-column>
-        <el-table-column label="出库类型" prop="name"></el-table-column>
-        <el-table-column label="状态" prop="name"></el-table-column>
-        <el-table-column label="出库仓库" prop="name"></el-table-column>
-        <el-table-column label="出库数量" prop="name"></el-table-column>
-        <el-table-column label="出库时间" prop="name"></el-table-column>
+         <el-table-column label="单号" prop="saleCode"></el-table-column>
+      <el-table-column label="类型" prop="saleType"></el-table-column>
+      <el-table-column label="状态" prop="name">
+        <template slot-scope="scope">
+          <div>
+            <span>{{scope.row.storage?'已出库':'未出库'}}</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="出库库房" prop="name">
+        <template slot-scope="scope">
+          <div>
+            <span>{{scope.row.storageRoomDTO?scope.row.storageRoomDTO.storageRoomName:''}}</span>
+          </div>
+        </template>
+      </el-table-column>
+       <el-table-column label="出库时间" prop="storeTime"></el-table-column>
+      <el-table-column label="供货方式" prop="salesSlipMethod"></el-table-column>
     </el-table>
+     <paging v-on:pageFlag="pageFlag" :pageNum="pageNum" :theQuery="theQuery"></paging>
     <!-- <el-button @click="Btn">跳转</el-button> -->
   </div>
 </template>
 <script>
+import axios from "../api/axios.js";
+import { saleSlipSelect,storageRoomOutput } from "../api/address.js";
 export default {
   data() {
     return {
-      dataList: [
-        {
-          name: "奶粉"
-        }
-      ]
+      dataList: [],
+      pageNum:'',
+       theQuery: {
+        address: "",
+        addressDetail: "",
+        arrivalTime: "",
+        endTime: "",
+        pageNum: 1,
+        pageSize: 20,
+        person: "",
+        phone: "",
+        saleCode: "",
+        saleType: "",
+        salesSlipDetailForms: [
+        
+        ],
+        salesSlipMethod: "",
+        startTime: "",
+        status: "",
+        storage: null,
+        storageRoomId: null,
+        storeTime: ""
+      },
     };
   },
+  created(){
+    this.getList();
+  },
   methods: {
+    pageFlag: function(data) {
+      this.theQuery.pageNum = data.pageNo;
+      this.theQuery.pageSize = data.pageSize;
+      this.getList();
+    },
+      outBtn(row) {
+      let data = {
+        id: row.id,
+        person: this.$store.state.loading.user.name,
+        storageRoomId: row.storageRoomDTO.id
+      };
+      axios.post(storageRoomOutput, data).then(data => {
+        this.$message.success("出库成功");
+        this.getList();
+      });
+    },
+    getList() {
+      axios.post(saleSlipSelect, this.theQuery).then(data => {
+        console.log(data);
+        this.dataList=data.content;
+         this.pageNum=data.totalElements;
+      });
+    },
     //新增
     AddnewBtn(){
       this.$router.push({
@@ -58,11 +118,11 @@ export default {
       })
     },
     //详情
-    detailBtn(){
+    detailBtn(row){
       console.log('121')
       this.$router.push({
         path:'/Index/StoreManageOutDetail',
-        query:{}
+        query:{id:row}
       })
     },
     Btn() {

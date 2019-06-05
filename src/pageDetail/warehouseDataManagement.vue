@@ -58,9 +58,9 @@
         <el-form-item label="库房名称:" prop="storageRoomName">
           <el-input v-model="postData.storageRoomName"></el-input>
         </el-form-item>
-        <el-form-item label="库房编码:" prop="storageRoomCode">
+        <!-- <el-form-item label="库房编码:" prop="storageRoomCode">
           <el-input v-model="postData.storageRoomCode"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="库房地址:" prop="address">
           <el-input v-model="postData.address"></el-input>
         </el-form-item>
@@ -152,7 +152,7 @@ export default {
         createPerson: "", //创建人
         phone: "", //电话
         prohibit: null, //是否禁用
-        storageRoomCode: "", //库房编码
+        // storageRoomCode: "", //库房编码
         storageRoomName: "" //库房名称
       },
       dataList: [],
@@ -218,6 +218,7 @@ export default {
         if (valid) {
           axios.post(storageRoomInsert, this.postData).then(data => {
             this.$message.success("新增成功");
+            this.getList();
             this.dialogVisibleAdd = false;
           });
         }

@@ -1,30 +1,27 @@
 import axios from 'axios'
 import { Message } from 'element-ui';
-axios.defaults.baseURL = 'http://192.168.10.210:8886'
-
+axios.defaults.baseURL = 'http://localhost:8886'
 axios.defaults.withCredentials = true;
 //添加请求拦截器
-
 axios.interceptors.request.use(
     config => {
         config.params = Object.assign({})
-        
         return config
     },
     error => {
         return Promise.reject(error)
     }
 )
-// axios.interceptors.response.setHeader("token");
-
-// axios.interceptors.response.headers()
 //添加响应拦截器
 axios.interceptors.response.use(
     res => {
         if(res.status == 200){
-            
-            return res.data.data
-          
+            if(res.data.code==0){
+                return res.data.data
+            }else{
+                Message.error(res.data.msg);
+                return Promise.reject(res);
+            }
         }else {
             return Promise.reject(res)
     }
@@ -33,8 +30,6 @@ axios.interceptors.response.use(
         return error.response.data
     }
 )
-
-
 export default {
     baseURL: axios.defaults.baseURL,
     get: function (url, data = {}, headers) {

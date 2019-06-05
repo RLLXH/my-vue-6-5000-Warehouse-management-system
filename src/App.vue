@@ -13,6 +13,20 @@ export default {
 </script>
 
 <style lang="less">
+   body .el-table th.gutter{
+      display: table-cell!important;
+  }
+  
+  body .el-table colgroup.gutter{
+      display: table-cell!important;
+  }
+   .el-table .warning-row {
+    background: oldlace;
+  }
+
+  .el-table .success-row {
+    background: #f0f9eb;
+  }
 @percent: 100%;
 html {
   height: @percent;
@@ -37,6 +51,15 @@ html {
     background-color: #F0FFF0;
     text-align: center;
   }//表头背景颜色
+  .el-table__row{
+    
+    .el-input{
+      width: 80%;
+    }
+  }
+
+
+
   .el-table td{
     text-align: center;
     // background-color:	#F0FFFF;

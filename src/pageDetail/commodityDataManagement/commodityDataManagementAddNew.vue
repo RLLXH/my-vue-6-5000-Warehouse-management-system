@@ -12,9 +12,9 @@
         <el-form-item label="商品名称:" prop="goodsName">
           <el-input v-model="postData.goodsName"></el-input>
         </el-form-item>
-        <el-form-item label="商品编号:" prop="goodsCode">
+        <!-- <el-form-item label="商品编号:" prop="goodsCode">
           <el-input v-model="postData.goodsCode"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="商品类别:" prop="category">
           <el-select placeholder="请选择" v-model="postData.category">
             <el-option

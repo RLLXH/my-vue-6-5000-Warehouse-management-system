@@ -25,12 +25,24 @@ import commodityDataManagement from '../pageDetail/commodityDataManagement.vue'
 import commodityDataManagementAddNew from '../pageDetail/commodityDataManagement/commodityDataManagementAddNew.vue'
 import totalInventory from '../pageDetail/totalInventory.vue'
 import UserManagement from '../pageDetail/userManagement.vue'
+import purchasingManageUpdate from '../pageDetail/purchasingManage/purchasingManageUpdate.vue'
+import returnsManagementUpdate from '../pageDetail/returnsManagement/returnsManagementUpdate.vue'
+import loading from '../components/loadIng.vue'
+import orderManagementMobile from '../pageDetail/orderManagement/orderManagementMobile.vue'
+import refundManageMobile from '../pageDetail/refundManage/refundManageMobile.vue'
+import totalInventoryDetail from '../pageDetail/totalInventory/totalInventoryDetail.vue'
+import { Loading } from 'element-ui';
 Vue.use(Router)
 export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/Index/Grad'
+      redirect: '/loading'
+    },
+    {
+      path:'/loading',
+      name:'登录页',
+      component:loading
     },
     {
       path: '/Index',
@@ -69,9 +81,6 @@ export default new Router({
         path: 'PurchasingManageAddNew',
         name: '采购新增',
         component: PurchasingManageAddNew,
-        meta:{
-          keepAlive: true // 此组件需要被缓存
-        }
       }, {
         path: 'PurchasingManageDetail',
         name: '采购详情',
@@ -132,7 +141,27 @@ export default new Router({
         path:'UserManagement',
         name:'用户管理',
         component:UserManagement
-      },
+      },{
+        path:"purchasingManageUpdate",
+        name:'采购修改',
+        component:purchasingManageUpdate
+      },{
+        path:'returnsManagementUpdate',
+        name:"退货修改",
+        component:returnsManagementUpdate
+      },{
+        path:'orderManagementMobile',
+        name:'销售单修改',
+        component:orderManagementMobile
+      },{
+        path:'refundManageMobile',
+        name:'退供修改',
+        component:refundManageMobile
+      },{
+        path:'totalInventoryDetail',
+        name:'库存详情',
+        component:totalInventoryDetail
+      }
       ]
     }
   ]
