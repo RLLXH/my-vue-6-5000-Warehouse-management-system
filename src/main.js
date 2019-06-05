@@ -11,8 +11,9 @@ import echarts from 'echarts'
 import paging from './components/paging.vue'
 import Vuex from 'vuex'
 import store from './store/index'
+import Mytools from '../src/utils/myTools'
 Vue.use(Vuex)
-
+Vue.prototype.$Mytools = Mytools
 Vue.prototype.$echarts = echarts 
 Vue.component('paging',paging)
 Vue.use(ElementUI)

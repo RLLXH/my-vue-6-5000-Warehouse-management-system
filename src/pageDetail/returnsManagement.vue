@@ -2,15 +2,18 @@
   <div>
     <div>
       <el-form label-position="right" label-width="100px" :inline="true">
-        <el-form-item label="退货单号:">
+         <el-form-item label="退货单号:">
           <el-input v-model="theQuery.purchaseCode"></el-input>
         </el-form-item>
-        <el-form-item label="退货方式:">
-          <el-input v-model="theQuery.purchaseMethod"></el-input>
+         <el-form-item label="状态:">
+           <el-select v-model="theQuery.storage">
+            <el-option :value='true' label="已入库"></el-option>
+            <el-option :value='false' label="未入库"></el-option>
+          </el-select>
         </el-form-item>
-        <!-- <el-form-item label="退货仓库:">
-          <el-input v-model="theQuery.purchaseMethod"></el-input>
-        </el-form-item> -->
+        <el-form-item label="供货方式:">
+           <el-input v-model="theQuery.purchaseMethod"></el-input>
+        </el-form-item>
         <el-form-item label=" ">
           <el-button @click="getList">查询</el-button>
         </el-form-item>
@@ -26,7 +29,7 @@
           <div>
             
             <el-button type="text" @click="detailBtn(scope.row.id)">查看</el-button>
-            <el-button type="text" v-if='scope.row.storage' @click="deleteBtn(scope.row.id)">删除</el-button>
+            <el-button type="text" v-if='!scope.row.storage' @click="deleteBtn(scope.row.id)">删除</el-button>
             <el-button type="text" v-if='!scope.row.storage' @click="updateBtn(scope.row.id)">修改</el-button>
           </div>
         </template>

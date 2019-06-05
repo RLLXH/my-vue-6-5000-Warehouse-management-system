@@ -2,17 +2,24 @@
   <div>
     <div>
       <el-form label-position="right" label-width="100px" :inline="true">
-        <el-form-item label="入库单号:">
-          <el-input></el-input>
+        <el-form-item label="单号:">
+          <el-input v-model="theQuery.purchaseCode"></el-input>
         </el-form-item>
-        <el-form-item label="入库类型:">
-          <el-input></el-input>
+        <el-form-item label="类型:">
+      
+        <el-select v-model="theQuery.purchaseType">
+            <el-option value='采购' label='采购'></el-option>
+            <el-option value='退货' label="退货"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="入库时间:">
-          <el-input></el-input>
+           <el-form-item label="状态:">
+          <el-select v-model="theQuery.storage">
+            <el-option :value='true' label="已入库"></el-option>
+            <el-option :value='false' label="未入库"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label=" ">
-          <el-button>查询</el-button>
+          <el-button @click="getList">查询</el-button>
         </el-form-item>
       </el-form>
     </div>

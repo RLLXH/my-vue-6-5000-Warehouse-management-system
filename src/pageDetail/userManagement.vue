@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <el-form label-position="right" label-width="100px" :inline="true">
+      <!-- <el-form label-position="right" label-width="100px" :inline="true">
         <el-form-item label="用户名称:">
           <el-input></el-input>
         </el-form-item>
@@ -14,7 +14,7 @@
         <el-form-item label=" ">
           <el-button @click="getList">查询</el-button>
         </el-form-item>
-      </el-form>
+      </el-form> -->
     </div>
     <el-row>
       <el-button class="addBtn" @click="AddnewBtn">增加</el-button>
@@ -61,8 +61,9 @@
         </el-form-item>
         <el-form-item label="用户权限:">
           <el-select v-model="addData.roleListId">
-            <el-option value="2" label="管理员"></el-option>
-            <el-option value="3" label="游客"></el-option>
+             <!-- <el-option value="1" label="系统管理员"></el-option> -->
+            <el-option value="2" label="仓库管理员"></el-option>
+            <el-option value="3" label="客户"></el-option>
           </el-select>
         </el-form-item>
       </el-form>

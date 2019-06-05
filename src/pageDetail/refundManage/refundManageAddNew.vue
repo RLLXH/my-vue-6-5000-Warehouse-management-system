@@ -194,7 +194,7 @@
         <el-table-column label="商品数量" prop="num">
           <template slot-scope="scope">
             <div>
-              <el-input v-model="scope.row.num"></el-input>
+              <el-input v-model="scope.row.num" @input="inpuNum(scope.row)"></el-input>
             </div>
           </template>
         </el-table-column>
@@ -263,7 +263,7 @@ export default {
       storageRoomList: [],
         rules: {
         person: [{ required: true, message: "请输入", trigger: "blur" }],
-        phone: [{ required: true, message: "请输入", trigger: "blur" }],
+        phone: [{ required: true, validator: this.$Mytools.regInputPhone, trigger: "blur" }],
         // address: [{ required: true, message: "请选择", trigger: "change" }],
         addressDetail: [{ required: true, message: "请输入", trigger: "blur" }],
         salesSlipMethod: [
@@ -278,6 +278,14 @@ export default {
      this.gitSelect();
   },
   methods: {
+    //输入数量验证
+    inpuNum(row){
+      console.log(row)
+      if(row.num>row.goodsNumber){
+        row.num=null;
+        this.$message.warning('商品数量不能大于库存，请重新输入')
+      }
+    },
       //级联
     handleItemChange(val) {
       axios.post(provinceCity + "?procinceid=" + val[0]).then(data => {
@@ -378,19 +386,29 @@ export default {
          })
        }
      })
+     let flag = true
       this.theSelection.map((v, k) => {
-        let obj = {
+        if(v.num){
+           let obj = {
           goodsId: v.goodsDTO.id,
           goodsNumber: v.num - 0
         };
         this.postDate.salesSlipDetailForms.push(obj);
+        }else{
+          this.$message.warning('请输入商品数量')
+          flag = false
+        }
+       
       });
-      let data = this.postDate;
+      if(flag){
+          let data = this.postDate;
       axios.post(salesSlipInsert, data).then(data => {
         console.log(data);
         this.$message.success("添加成功");
         this.$router.go(-1);
       }); }
+      }
+    
       });
     },
     deleteBtn() {},
@@ -401,7 +419,11 @@ export default {
       this.active--;
     },
     nextBtn() {
-      this.active++;
+    if (this.theSelection.length>0 && this.postDate.storageRoomId) {
+        this.active++;
+      } else {
+        this.$message.warning("请选择库房和商品");
+      }
     },
     //选中商品时
     selection(list) {

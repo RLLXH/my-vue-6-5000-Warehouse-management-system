@@ -1,18 +1,25 @@
 <template>
   <div>
     <div>
-      <el-form label-position="right" label-width="100px" :inline="true">
+      <el-form label-position="right" label-width="100px" :inline="true" :model="theQuery">
         <el-form-item label="单号:">
-          <el-input></el-input>
+          <el-input v-model="theQuery.saleCode"></el-input>
         </el-form-item>
         <el-form-item label="类型:">
-          <el-input></el-input>
+      
+        <el-select v-model="theQuery.saleType">
+            <el-option value='退供' label='退供'></el-option>
+            <el-option value='销售' label="销售"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="时间:">
-          <el-input></el-input>
+           <el-form-item label="状态:">
+          <el-select v-model="theQuery.storage">
+            <el-option :value='true' label="已出库"></el-option>
+            <el-option :value='false' label="未出库"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label=" ">
-         <el-button>查询</el-button>
+         <el-button @click="getList">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -72,7 +79,6 @@ export default {
         saleCode: "",
         saleType: "",
         salesSlipDetailForms: [
-        
         ],
         salesSlipMethod: "",
         startTime: "",

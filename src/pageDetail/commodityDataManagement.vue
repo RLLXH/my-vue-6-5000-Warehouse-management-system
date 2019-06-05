@@ -8,6 +8,12 @@
         <el-form-item label="商品类别:">
           <el-input v-model="theQuery.category"></el-input>
         </el-form-item>
+         <el-form-item label="商品属性:">
+          <el-input v-model="theQuery.goodsAttributel"></el-input>
+        </el-form-item>
+          <el-form-item label="供应商:">
+          <el-input v-model="theQuery.goodsSupplier"></el-input>
+        </el-form-item>
         <el-form-item label=" ">
           <el-button @click="getList">查询</el-button>
         </el-form-item>

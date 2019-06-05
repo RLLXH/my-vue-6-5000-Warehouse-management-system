@@ -125,7 +125,7 @@
       <el-table-column label="商品数量" prop="goodsNumbe">
            <template slot-scope="scope">
           <div>
-            <el-input v-model="scope.row.goodsNumber"></el-input>
+            <el-input v-model="scope.row.goodsNumber" @input="inpuNum(scope.row)"></el-input>
           </div>
         </template>
      
@@ -158,6 +158,14 @@ export default {
     this.getDetail();
   },
   methods: {
+          //输入数量验证
+    inpuNum(row){
+      console.log(row)
+      if(row.goodsNumber>row.storageNum){
+        row.goodsNumber=null;
+        this.$message.warning('商品数量不能大于库存，请重新输入')
+      }
+    },
     getDetail() {
       axios
         .post(saleSlipSelectDetal + "?id=" + this.$route.query.id)
@@ -174,7 +182,8 @@ export default {
               }
         axios.post(storageRoomSetailSelect, theQuery).then(data => {
         console.log(data, "库存");
-        v.storageNum=data.content[0].goodsNumber
+        v.storageNum=data.content[0].goodsNumber;
+        this.detailData.salesSlipDetailDTOS.push()
       })
           })
         });

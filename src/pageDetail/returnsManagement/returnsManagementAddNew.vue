@@ -87,7 +87,7 @@
          
           <el-select v-model="postDate.purchaseMethod">
                <el-option value="直供" label="直供"></el-option>
-           
+            <el-option value="配送" label="配送"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="退货方：" prop="supplier">
@@ -190,7 +190,7 @@ export default {
       storageRoomList: [],
          rules: {
         consignor: [{ required: true, message: "请输入", trigger: "blur" }],
-        phone: [{ required: true, message: "请输入", trigger: "blur" }],
+        phone: [{ required: true,validator: this.$Mytools.regInputPhone, trigger: "blur" }],
         // address: [{ required: true, message: "请选择", trigger: "change" }],
         addressDetail: [{ required: true, message: "请输入", trigger: "blur" }],
         purchaseMethod: [
@@ -293,19 +293,29 @@ export default {
          })
        }
      })
+     let flag = true 
       this.theSelection.map((v, k) => {
-        let obj = {
+        if(v.num){
+           let obj = {
           goodsId: v.id,
           goodsNumber: v.num - 0
         };
         this.postDate.purchaseOrderDetailFormList.push(obj);
+        }else {
+           this.$message.warning('请输入商品数量')
+              flag = false;
+        }
+       
       });
-      let data = this.postDate;
+      if(flag){
+             let data = this.postDate;
       axios.post(purchaseOrderInsert, data).then(data => {
         console.log(data);
         this.$message.success("添加成功");
         this.$router.go(-1);
       });  }
+      }
+ 
       });
     },
     deleteBtn() {},
@@ -316,7 +326,7 @@ export default {
       this.active--;
     },
     nextBtn() {
-      if(this.theSelection&&this.postDate.storageRoomId){
+      if(this.theSelection.length>0 &&this.postDate.storageRoomId){
         this.active++;
       }else{
         this.$message.warning('请选择库房和商品')

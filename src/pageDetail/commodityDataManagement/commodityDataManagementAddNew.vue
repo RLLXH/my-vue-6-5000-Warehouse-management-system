@@ -9,6 +9,9 @@
         ref="postData"
         :rules="rules"
       >
+        <el-form-item label="商品编码:"  v-if="this.$route.query.row">
+          <span class="spanBox">{{postData.goodsCode}}</span>
+        </el-form-item>
         <el-form-item label="商品名称:" prop="goodsName">
           <el-input v-model="postData.goodsName"></el-input>
         </el-form-item>
@@ -159,5 +162,9 @@ export default {
 }
 .btnBox {
   text-align: center;
+}
+.spanBox{
+  width: 210px;
+  display: block;
 }
 </style>

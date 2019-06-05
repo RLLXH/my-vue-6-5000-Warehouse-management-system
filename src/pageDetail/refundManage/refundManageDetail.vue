@@ -175,6 +175,7 @@ export default {
         axios.post(storageRoomSetailSelect, theQuery).then(data => {
         console.log(data, "库存");
         v.storageNum=data.content[0].goodsNumber
+         this.detailData.salesSlipDetailDTOS.push()
       })
           })
         });

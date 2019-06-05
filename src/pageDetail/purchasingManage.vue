@@ -2,14 +2,17 @@
   <div>
     <div>
       <el-form label-position="right" label-width="100px" :inline="true">
-        <el-form-item label="采购单号:">
-          <el-input></el-input>
+       <el-form-item label="采购单号:">
+          <el-input v-model="theQuery.purchaseCode"></el-input>
         </el-form-item>
-        <el-form-item label="采购类型:">
-          <el-input></el-input>
+         <el-form-item label="状态:">
+           <el-select v-model="theQuery.storage">
+            <el-option :value='true' label="已入库"></el-option>
+            <el-option :value='false' label="未入库"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="采购时间:">
-          <el-input></el-input>
+        <el-form-item label="供货方式:">
+           <el-input v-model="theQuery.purchaseMethod"></el-input>
         </el-form-item>
         <el-form-item label=" ">
           <el-button>查询</el-button>
@@ -26,7 +29,7 @@
           <div>
             
             <el-button type="text" @click="detailBtn(scope.row.id)">查看</el-button>
-            <el-button type="text" v-if='scope.row.storage' @click="deleteBtn(scope.row.id)">删除</el-button>
+            <el-button type="text" v-if='!scope.row.storage' @click="deleteBtn(scope.row.id)">删除</el-button>
             <el-button type="text" v-if='!scope.row.storage' @click="updateBtn(scope.row.id)">修改</el-button>
           </div>
         </template>
@@ -49,7 +52,7 @@
       </el-table-column>
       <!-- <el-table-column label="采购数量" prop="name"></el-table-column> -->
       <el-table-column label="创建时间" prop="createTime"></el-table-column>
-      <el-table-column label="采购方式" prop="purchaseMethod"></el-table-column>
+      <el-table-column label="供货方式" prop="purchaseMethod"></el-table-column>
       <el-table-column label="供货方" prop="supplier"></el-table-column>
        <el-table-column label="预计到货时间" prop="arrivalTime"></el-table-column>
     </el-table>
