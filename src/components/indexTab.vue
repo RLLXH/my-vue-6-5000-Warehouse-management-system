@@ -20,11 +20,18 @@ export default {
   watch: {
     $route: "breadCrumbChange"
   },
+  
   created() {
     sessionStorage.setItem("name", this.$route.name);
     this.bread = sessionStorage.getItem("name");
     this.$store.commit('loading/setUser',JSON.parse(sessionStorage.getItem('user')))
-    console.log(this.$store.state.loading.user)
+      if(!sessionStorage.getItem('user')){
+        console.log('kasd')
+            this.$router.push({
+        path: "/loading",
+        query: {}
+          });
+      }
   },
   methods: {
     //退出登录
@@ -35,7 +42,8 @@ export default {
         type: "warning"
       }).then(() => {
           sessionStorage.clear('user');
-            this.$router.push({
+         
+        this.$router.push({
         path: "/loading",
         query: {}
           });
@@ -45,6 +53,12 @@ export default {
     breadCrumbChange() {
       sessionStorage.setItem("name", this.$route.name);
       this.bread = sessionStorage.getItem("name");
+      if(!sessionStorage.getItem('user')){
+            this.$router.push({
+        path: "/loading",
+        query: {}
+          });
+      }
     }
   },
 };

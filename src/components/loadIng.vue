@@ -46,6 +46,7 @@ export default {
   created() {
     console.log(this.$Mytools);
   },
+  
   methods: {
     loading(formName) {
       this.$refs[formName].validate(valid => {

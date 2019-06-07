@@ -15,7 +15,7 @@
            <el-input v-model="theQuery.purchaseMethod"></el-input>
         </el-form-item>
         <el-form-item label=" ">
-          <el-button>查询</el-button>
+          <el-button @click="getList">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
